@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -18,10 +17,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import example.lenovo.qqmusic.R;
-import example.lenovo.qqmusic.inject.component.DaggerMainComponent;
-import example.lenovo.qqmusic.inject.component.DaggerMusicFragmentAdapterComponent;
-import example.lenovo.qqmusic.inject.module.MainModule;
+import example.lenovo.qqmusic.inject.component.DaggerMusicFragmentComponent;
 import example.lenovo.qqmusic.inject.module.MusicFragmentAdapterModule;
+import example.lenovo.qqmusic.inject.module.MusicFragmentPersenterModule;
+import example.lenovo.qqmusic.presenter.MusicFragmentContact;
+import example.lenovo.qqmusic.presenter.impl.MusicFragmentPersenter;
+import example.lenovo.qqmusic.ui.activity.MainActivity;
 import example.lenovo.qqmusic.ui.adapter.SongListAdapter;
 import example.lenovo.qqmusic.view.ScrollRecyclerLayoutManager;
 
@@ -29,7 +30,7 @@ import example.lenovo.qqmusic.view.ScrollRecyclerLayoutManager;
  * Created by Lenovo on 2017/7/4.
  */
 
-public class MainMusicFragment extends BaseFragment {
+public class MainMusicFragment extends BaseFragment implements MusicFragmentContact.view {
 
     @BindView(R.id.music_local_ll)
     LinearLayout musicLocalLl;
@@ -49,6 +50,8 @@ public class MainMusicFragment extends BaseFragment {
 
     @Inject
     SongListAdapter songListAdapter;
+    @Inject
+    MusicFragmentPersenter musicFragmentPersenter;
 
     ArrayList<String> songList;
 
@@ -66,9 +69,10 @@ public class MainMusicFragment extends BaseFragment {
 
         songList = getSongList();
 
-        DaggerMusicFragmentAdapterComponent
+        DaggerMusicFragmentComponent
                 .builder()
                 .musicFragmentAdapterModule(new MusicFragmentAdapterModule(getActivity(), songList))
+                .musicFragmentPersenterModule(new MusicFragmentPersenterModule(this))
                 .build()
                 .inject(this);
 
@@ -99,8 +103,36 @@ public class MainMusicFragment extends BaseFragment {
 
     @OnClick({R.id.music_local_ll, R.id.music_internet_ll, R.id.music_recently_ll, R.id.music_like_ll, R.id.music_download_ll, R.id.music_push_ll})
     public void onViewClicked(View view) {
+        int id = 0;
         switch (view.getId()) {
             case R.id.music_local_ll:
+                id = R.id.music_local_ll;
+                break;
+            case R.id.music_internet_ll:
+                id = R.id.music_internet_ll;
+                break;
+            case R.id.music_recently_ll:
+                id = R.id.music_recently_ll;
+                break;
+            case R.id.music_like_ll:
+                id = R.id.music_like_ll;
+                break;
+            case R.id.music_download_ll:
+                id = R.id.music_download_ll;
+                break;
+            case R.id.music_push_ll:
+                id = R.id.music_push_ll;
+                break;
+        }
+        musicFragmentPersenter.setIntent(id);
+    }
+
+    @Override
+    public void intentToActivity(int id) {
+        switch (id) {
+            case R.id.music_local_ll:
+                ((MainActivity) getParentFragment().getActivity())
+                        .intnetTolocal();
                 break;
             case R.id.music_internet_ll:
                 break;
@@ -113,5 +145,10 @@ public class MainMusicFragment extends BaseFragment {
             case R.id.music_push_ll:
                 break;
         }
+    }
+
+    @Override
+    public void intentSongListActivity() {
+
     }
 }

@@ -7,10 +7,15 @@ package example.lenovo.qqmusic.presenter;
 public interface MusicFragmentContact {
 
     interface view{
+        void intentToActivity(int id);
 
+        void intentSongListActivity();
     }
 
     interface persenter{
+        void setIntent(int id);
+
+        void setSongListIntent();
     }
 
 }
