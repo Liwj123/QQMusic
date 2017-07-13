@@ -24,6 +24,7 @@ import example.lenovo.qqmusic.inject.module.MainModule;
 import example.lenovo.qqmusic.ui.activity.MainActivity;
 
 /**
+ * 主页面fragment
  * Created by Lenovo on 2017/7/5.
  */
 

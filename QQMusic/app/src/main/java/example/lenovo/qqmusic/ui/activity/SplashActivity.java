@@ -27,6 +27,7 @@ public class SplashActivity extends BaseAvtivity implements SplashContact.View{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //隐藏通知栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
@@ -37,6 +38,7 @@ public class SplashActivity extends BaseAvtivity implements SplashContact.View{
                 .build()
                 .inject(this);
 
+        //开始计时
         iSplashPresenter.timer();
     }
 
@@ -45,6 +47,9 @@ public class SplashActivity extends BaseAvtivity implements SplashContact.View{
         iSplashPresenter.startMain();
     }
 
+    /**
+     * 跳转方法
+     */
     @Override
     public void intentToMain() {
         Intent intent = new Intent(this,MainActivity.class);

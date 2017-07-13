@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_bottom_player"
     android:layout_width="match_parent"
     android:layout_height="70dp"
     android:gravity="center_vertical"
@@ -25,18 +26,20 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_marginLeft="5dp"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="3"
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/main_bottom_player_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="歌名" />
 
                 <TextView
+                    android:id="@+id/main_bottom_player_singer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="歌手"
@@ -47,35 +50,19 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:src="@android:drawable/ic_media_previous"
+                    android:id="@+id/main_bottom_player_play"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:src="@android:drawable/ic_media_play" />
 
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_centerInParent="true"
-                        android:src="@android:drawable/ic_media_play" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_centerInParent="true"
-                        android:src="@android:drawable/ic_media_pause" />
-
-                </RelativeLayout>
 
                 <ImageView
+                    android:id="@+id/main_bottom_player_next"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"

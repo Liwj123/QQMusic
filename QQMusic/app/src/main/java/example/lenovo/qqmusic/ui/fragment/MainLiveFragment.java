@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import example.lenovo.qqmusic.R;
 
 /**
+ * 直播页面的fragment
  * Created by Lenovo on 2017/7/4.
  */
 

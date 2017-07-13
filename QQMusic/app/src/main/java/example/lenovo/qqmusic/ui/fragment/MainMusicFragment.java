@@ -27,6 +27,7 @@ import example.lenovo.qqmusic.ui.adapter.SongListAdapter;
 import example.lenovo.qqmusic.view.ScrollRecyclerLayoutManager;
 
 /**
+ * 音乐页面的fragment
  * Created by Lenovo on 2017/7/4.
  */
 
@@ -79,6 +80,9 @@ public class MainMusicFragment extends BaseFragment implements MusicFragmentCont
         setListView();
     }
 
+    /**
+     * 设置歌单的模拟数据
+     */
     private void setListView() {
         musicRecycler.setAdapter(songListAdapter);
         musicRecycler.setLayoutManager(new ScrollRecyclerLayoutManager(getActivity()));
@@ -87,11 +91,9 @@ public class MainMusicFragment extends BaseFragment implements MusicFragmentCont
 
     private ArrayList<String> getSongList() {
         ArrayList<String> list = new ArrayList<>();
-
         for (int i = 0; i < 20; i++) {
             list.add("歌单" + i);
         }
-
         return list;
     }
 
