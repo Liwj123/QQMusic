@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 
@@ -17,6 +18,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import example.lenovo.qqmusic.R;
 import example.lenovo.qqmusic.inject.component.DaggerMainFragmentComponent;
@@ -44,6 +46,8 @@ public class MainFragment extends BaseFragment {
     MainVideoFragment vidoeFragment;
     @Inject
     MainLiveFragment liveFragment;
+    @BindView(R.id.fragment_main_search)
+    ImageView fragmentMainSearch;
 
     private ArrayList<BaseFragment> fragments = new ArrayList<>();
 
@@ -75,11 +79,11 @@ public class MainFragment extends BaseFragment {
         openDrawer();
     }
 
-    private void openDrawer(){
+    private void openDrawer() {
         fragmentMainToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity)getActivity()).drawerState(true);
+                ((MainActivity) getActivity()).drawerState(true);
             }
         });
     }
@@ -120,5 +124,10 @@ public class MainFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @OnClick(R.id.fragment_main_search)
+    public void onViewClicked() {
+        ((MainActivity)getActivity()).intentToSearch();
     }
 }

@@ -76,11 +76,19 @@ public class BottomPlayerFragment extends BaseFragment {
         }
     }
 
+    /**
+     * 给底部导航栏设置播放的音乐信息
+     * @param musicInfo
+     */
     public void setMusicInfo(MusicBean musicInfo) {
         mainBottomPlayerName.setText(musicInfo.getMusic_name());
         mainBottomPlayerSinger.setText(musicInfo.getMusic_artist());
     }
 
+    /**
+     * 判断当前的音乐状态，设置开始/暂停按钮
+     * @param isPlay
+     */
     public void setPlsyStatus(boolean isPlay){
         this.isPlay = isPlay;
         if (!isPlay){

@@ -66,7 +66,12 @@ public class LocalFragment extends BaseFragment implements LocalFragmentContact.
         //扫描手机储存中的本地音乐
         localFragmentPersenter.getLocalMusic();
 
-
+        localToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity)getActivity()).onBack();
+            }
+        });
     }
 
     /**
@@ -102,6 +107,5 @@ public class LocalFragment extends BaseFragment implements LocalFragmentContact.
     @Override
     public void onLocalListClick(int position) {
         ((MainActivity) getActivity()).play(list, position);
-
     }
 }

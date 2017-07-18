@@ -137,6 +137,8 @@ public class MainMusicFragment extends BaseFragment implements MusicFragmentCont
                         .intnetTolocal();
                 break;
             case R.id.music_internet_ll:
+                ((MainActivity) getParentFragment().getActivity())
+                        .intentToRemote();
                 break;
             case R.id.music_recently_ll:
                 break;

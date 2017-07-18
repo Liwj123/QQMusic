@@ -66,6 +66,9 @@ public class MusicService extends Service {
         super.onDestroy();
     }
 
+    /**
+     * 设置前台服务的内容
+     */
     private void setRemoteViews() {
         remoteViews = new RemoteViews(getPackageName(), R.layout.notification);
 
@@ -93,6 +96,9 @@ public class MusicService extends Service {
         setNotification();
     }
 
+    /**
+     * 将设置到的内容添加到前台服务中
+     */
     private void setNotification() {
         Intent intent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
@@ -112,6 +118,17 @@ public class MusicService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        if(mediaPlayer.isPlaying()){
+            MusicNofityManager
+                    .getInstance()
+                    .getiNofity()
+                    .playIndex(position);
+            MusicNofityManager
+                    .getInstance()
+                    .getiNofity()
+                    .playStatus(true);
+
+        }
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -243,5 +260,4 @@ public class MusicService extends Service {
             }
         }
     }
-
 }
