@@ -17,7 +17,9 @@ import java.util.ArrayList;
 
 import example.lenovo.qqmusic.R;
 import example.lenovo.qqmusic.manager.MusicNofityManager;
+import example.lenovo.qqmusic.model.BaseMusicBean;
 import example.lenovo.qqmusic.model.MusicBean;
+import example.lenovo.qqmusic.model.RemoteMusicBean;
 import example.lenovo.qqmusic.ui.activity.MainActivity;
 
 public class MusicService extends Service {
@@ -28,7 +30,7 @@ public class MusicService extends Service {
     private static final String ACTION = "com.music.MyReceiver";
     private MediaPlayer mediaPlayer = new MediaPlayer();
     private int musicTime;
-    private ArrayList<MusicBean> list = new ArrayList<>();
+    private ArrayList<BaseMusicBean> list = new ArrayList<>();
     private RemoteViews remoteViews;
     private int position;
 
@@ -46,9 +48,7 @@ public class MusicService extends Service {
         super.onCreate();
 
         //动态注册广播接收者
-        MusicReceiver musicReceiver = new MusicReceiver();
-        IntentFilter intentFilter = new IntentFilter(ACTION);
-        registerReceiver(musicReceiver, intentFilter);
+        initReceiver();
 
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
@@ -59,6 +59,15 @@ public class MusicService extends Service {
 
         //设置前台服务的内容
         setRemoteViews();
+    }
+
+    /**
+     * 动态注册广播接收者
+     */
+    private void initReceiver() {
+        MusicReceiver musicReceiver = new MusicReceiver();
+        IntentFilter intentFilter = new IntentFilter(ACTION);
+        registerReceiver(musicReceiver, intentFilter);
     }
 
     @Override
@@ -118,11 +127,11 @@ public class MusicService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if(mediaPlayer.isPlaying()){
+        if (mediaPlayer.isPlaying()) {
             MusicNofityManager
                     .getInstance()
                     .getiNofity()
-                    .playIndex(position);
+                    .playIndex(list.get(position));
             MusicNofityManager
                     .getInstance()
                     .getiNofity()
@@ -152,35 +161,52 @@ public class MusicService extends Service {
      * @param list
      * @param position
      */
-    public void play(ArrayList<MusicBean> list, int position) {
+    public void play(ArrayList<BaseMusicBean> list, int position) {
         this.list = list;
         this.position = position;
-        MusicBean musicBean = list.get(position);
+        BaseMusicBean musicBean = list.get(position);
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.reset();
         }
         mediaPlayer.reset();
-        try {
-            mediaPlayer.setDataSource(musicBean.getMusic_file_path());
-            mediaPlayer.prepareAsync();
-            mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                @Override
-                public void onPrepared(MediaPlayer mediaPlayer) {
-                    mediaPlayer.start();
-                }
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
+
+        if(musicBean instanceof MusicBean){
+            try {
+                mediaPlayer.setDataSource(((MusicBean)musicBean).getMusic_file_path());
+                remoteViews.setTextViewText(R.id.notification_name, ((MusicBean)musicBean).getMusic_name());
+                remoteViews.setTextViewText(R.id.notification_singer, ((MusicBean)musicBean).getMusic_artist());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else if (musicBean instanceof RemoteMusicBean){
+            try {
+                mediaPlayer.setDataSource(((RemoteMusicBean)musicBean).getBitrate().getFile_link());
+                remoteViews.setTextViewText(R.id.notification_name, ((RemoteMusicBean)musicBean).getSonginfo().getTitle());
+                remoteViews.setTextViewText(R.id.notification_singer, ((RemoteMusicBean)musicBean).getSonginfo().getAuthor());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        remoteViews.setTextViewText(R.id.notification_name, musicBean.getMusic_name());
-        remoteViews.setTextViewText(R.id.notification_singer, musicBean.getMusic_artist());
+
+        mediaPlayer.prepareAsync();
+        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mediaPlayer) {
+                mediaPlayer.start();
+                MusicNofityManager
+                        .getInstance()
+                        .getiNofity()
+                        .playStatus(true);
+            }
+        });
+
         remoteViews.setImageViewResource(R.id.notification_play, android.R.drawable.ic_media_pause);
         setNotification();
 
         MusicNofityManager
                 .getInstance()
                 .getiNofity()
-                .playIndex(position);
+                .playIndex(list.get(position));
 
     }
 

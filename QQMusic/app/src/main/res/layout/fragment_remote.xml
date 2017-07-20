@@ -25,6 +25,8 @@
     </android.support.v7.widget.Toolbar>
 
     <LinearLayout
+        android:padding="10dp"
+        android:gravity="center_vertical"
         android:id="@+id/remote_newmusic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -56,6 +58,8 @@
     </LinearLayout>
 
     <LinearLayout
+        android:padding="10dp"
+        android:gravity="center_vertical"
         android:id="@+id/remote_hotmusic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -87,6 +91,8 @@
     </LinearLayout>
 
     <LinearLayout
+        android:padding="10dp"
+        android:gravity="center_vertical"
         android:id="@+id/remote_chinamusic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -118,6 +124,8 @@
     </LinearLayout>
 
     <LinearLayout
+        android:padding="10dp"
+        android:gravity="center_vertical"
         android:id="@+id/remote_ktvmusic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

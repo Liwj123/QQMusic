@@ -17,6 +17,7 @@ import example.lenovo.qqmusic.Final;
 import example.lenovo.qqmusic.R;
 import example.lenovo.qqmusic.manager.INofity;
 import example.lenovo.qqmusic.manager.MusicNofityManager;
+import example.lenovo.qqmusic.model.BaseMusicBean;
 import example.lenovo.qqmusic.model.MusicBean;
 import example.lenovo.qqmusic.ui.Service.MusicService;
 import example.lenovo.qqmusic.ui.fragment.BaseFragment;
@@ -164,7 +165,7 @@ public class MainActivity extends BaseAvtivity implements INofity{
      * @param list
      * @param position
      */
-    public void play(ArrayList<MusicBean> list, int position){
+    public void play(ArrayList<BaseMusicBean> list, int position){
         musicService.play(list,position);
         //设置底部导航栏的状态
         bottomPlayerFragment.setPlsyStatus(true);
@@ -196,8 +197,8 @@ public class MainActivity extends BaseAvtivity implements INofity{
      * @param position
      */
     @Override
-    public void playIndex(int position) {
-        bottomPlayerFragment.setMusicInfo(list.get(position));
+    public void playIndex(BaseMusicBean bean) {
+        bottomPlayerFragment.setMusicInfo(bean);
     }
 
     /**

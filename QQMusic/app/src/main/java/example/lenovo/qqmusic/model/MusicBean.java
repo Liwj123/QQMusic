@@ -7,7 +7,7 @@ import android.os.Parcelable;
  * Created by Lenovo on 2017/7/6.
  */
 
-public class MusicBean implements Parcelable{
+public class MusicBean extends BaseMusicBean implements Parcelable {
     private int music_id;//ID
     private String music_name;//歌曲名
     private String music_album;//专辑名

@@ -2,8 +2,10 @@ package example.lenovo.qqmusic.http;
 
 import java.util.Map;
 
+import example.lenovo.qqmusic.http.service.RemoteMusicItemService;
 import example.lenovo.qqmusic.http.service.RemoteMusicService;
 import example.lenovo.qqmusic.model.NewMusicBean;
+import example.lenovo.qqmusic.model.RemoteMusicBean;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
@@ -17,6 +19,7 @@ public class HttpUtil {
 
     private static HttpUtil httpUtil;
     private RemoteMusicService remoteMusicService;
+    private RemoteMusicItemService remoteMusicItemService;
 
     public static synchronized HttpUtil getInstance(){
         if(httpUtil == null){
@@ -24,6 +27,11 @@ public class HttpUtil {
         }
         return httpUtil;
     }
+
+    /**
+     * 访问网络榜单
+     * @return
+     */
     private RemoteMusicService getService(){
         if (remoteMusicService == null){
             Retrofit retrofit = new Retrofit.Builder()
@@ -42,4 +50,27 @@ public class HttpUtil {
 
         call.enqueue(callback);
     }
+
+    /**
+     * 访问网络榜单中的音乐
+     * @return
+     */
+    private RemoteMusicItemService getItemService(){
+        if (remoteMusicItemService == null){
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(API.ROOT_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+            return remoteMusicItemService = retrofit.create(RemoteMusicItemService.class);
+        }else{
+            return remoteMusicItemService;
+        }
+    }
+
+    public void getItemRestservice(Callback<RemoteMusicBean> callback, Map<String, String> map){
+        getItemService();
+        Call<RemoteMusicBean> call = remoteMusicItemService.getRestService(map);
+        call.enqueue(callback);
+    }
+
 }

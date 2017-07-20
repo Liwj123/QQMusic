@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import example.lenovo.qqmusic.R;
-import example.lenovo.qqmusic.model.NewMusicBean;
+import example.lenovo.qqmusic.model.RemoteMusicBean;
 import example.lenovo.qqmusic.view.ILocalFragmentClick;
 
 /**
@@ -24,14 +24,14 @@ import example.lenovo.qqmusic.view.ILocalFragmentClick;
 public class RemoteMusicAdapter extends RecyclerView.Adapter<RemoteMusicAdapter.MyViewHolder>{
 
     Context context;
-    ArrayList<NewMusicBean.SongListBean> list;
+    ArrayList<RemoteMusicBean> list;
     ILocalFragmentClick iLocalFragmentClick;
 
     public void setiLocalFragmentClick(ILocalFragmentClick iLocalFragmentClick) {
         this.iLocalFragmentClick = iLocalFragmentClick;
     }
 
-    public RemoteMusicAdapter(Context context, ArrayList<NewMusicBean.SongListBean> list) {
+    public RemoteMusicAdapter(Context context, ArrayList<RemoteMusicBean> list) {
         this.context = context;
         this.list = list;
     }
@@ -43,8 +43,8 @@ public class RemoteMusicAdapter extends RecyclerView.Adapter<RemoteMusicAdapter.
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
-        holder.musicListName.setText(list.get(position).getTitle());
-        holder.musicListSinger.setText(list.get(position).getArtist_name());
+        holder.musicListName.setText(list.get(position).getSonginfo().getTitle());
+        holder.musicListSinger.setText(list.get(position).getSonginfo().getAuthor());
         holder.musicListLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

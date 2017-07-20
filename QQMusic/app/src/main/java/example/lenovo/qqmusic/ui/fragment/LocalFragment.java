@@ -19,6 +19,7 @@ import butterknife.Unbinder;
 import example.lenovo.qqmusic.R;
 import example.lenovo.qqmusic.inject.component.DaggerLocalFragmentComponent;
 import example.lenovo.qqmusic.inject.module.LocalFragmentPersenterModule;
+import example.lenovo.qqmusic.model.BaseMusicBean;
 import example.lenovo.qqmusic.model.MusicBean;
 import example.lenovo.qqmusic.presenter.LocalFragmentContact;
 import example.lenovo.qqmusic.presenter.impl.LocalFragmentPersenter;
@@ -106,6 +107,10 @@ public class LocalFragment extends BaseFragment implements LocalFragmentContact.
 
     @Override
     public void onLocalListClick(int position) {
-        ((MainActivity) getActivity()).play(list, position);
+        ArrayList<BaseMusicBean> arrayList=new ArrayList<>();
+        for (int i=0;i<list.size();i++){
+            arrayList.add(list.get(i));
+        }
+        ((MainActivity) getActivity()).play(arrayList, position);
     }
 }

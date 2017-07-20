@@ -14,7 +14,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import example.lenovo.qqmusic.R;
+import example.lenovo.qqmusic.model.BaseMusicBean;
 import example.lenovo.qqmusic.model.MusicBean;
+import example.lenovo.qqmusic.model.RemoteMusicBean;
 import example.lenovo.qqmusic.ui.activity.MainActivity;
 
 /**
@@ -70,6 +72,7 @@ public class BottomPlayerFragment extends BaseFragment {
                 break;
             case R.id.main_bottom_player_next:
                 ((MainActivity)getActivity()).next();
+
                 break;
             case R.id.main_bottom_player:
                 break;
@@ -78,11 +81,18 @@ public class BottomPlayerFragment extends BaseFragment {
 
     /**
      * 给底部导航栏设置播放的音乐信息
-     * @param musicInfo
+     * @param
      */
-    public void setMusicInfo(MusicBean musicInfo) {
-        mainBottomPlayerName.setText(musicInfo.getMusic_name());
-        mainBottomPlayerSinger.setText(musicInfo.getMusic_artist());
+    public void setMusicInfo(BaseMusicBean bean) {
+        if(bean instanceof MusicBean){
+            mainBottomPlayerName.setText(((MusicBean)bean).getMusic_name());
+            mainBottomPlayerSinger.setText(((MusicBean)bean).getMusic_artist());
+        }else if(bean instanceof RemoteMusicBean){
+
+
+        mainBottomPlayerName.setText(((RemoteMusicBean)bean).getSonginfo().getTitle());
+        mainBottomPlayerSinger.setText(((RemoteMusicBean)bean).getSonginfo().getAuthor());
+        }
     }
 
     /**

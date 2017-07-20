@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import example.lenovo.qqmusic.http.HttpUtil;
 import example.lenovo.qqmusic.model.NewMusicBean;
+import example.lenovo.qqmusic.model.RemoteMusicBean;
 import example.lenovo.qqmusic.presenter.RemoteMusicListContact;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,5 +49,29 @@ public class RemoteMusicListPresenter implements RemoteMusicListContact.presente
 
                     }
                 }, map);
+    }
+
+    @Override
+    public void getMusicInfo(NewMusicBean.SongListBean songListBean) {
+        Map<String, String> map = new HashMap<>();
+        map.put("format", "json");
+        map.put("calback", "");
+        map.put("from", "webapp_music");
+        map.put("method", "baidu.ting.song.play");
+        map.put("songid", songListBean.getSong_id());
+
+        HttpUtil.getInstance()
+                .getItemRestservice(new Callback<RemoteMusicBean>() {
+                    @Override
+                    public void onResponse(Call<RemoteMusicBean> call, Response<RemoteMusicBean> response) {
+                        view.setMusicPlay(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<RemoteMusicBean> call, Throwable t) {
+
+                    }
+                }, map);
+
     }
 }
